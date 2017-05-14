@@ -1,0 +1,21 @@
+import json
+import urllib2
+import sys
+import random
+def baidu_asr():
+	mykey = 'ecb4976819bb565ac65916070cd425f8'
+	userID=random.randint(1, 1000000)
+	msg=sys.argv[1]
+	print msg
+	jdata = {'key':mykey,'info':msg,'userid':userID}
+	json_data = json.dumps(jdata).decode('uft-8')
+	request = urllib2.Request(url='http://www.tuling123.com/openapi/api')
+	request.get_method = lambda:'POST'
+	fs = urllib2.urlopen(url=request,data=json_data)
+	result_str = fs.read().decode('utf-8')
+	json_resp = json.loads(result_str)
+	return json_resp
+json_resp = baidu_asr()
+
+print json.dumps(json_resp,ensure_ascii=False)
+
